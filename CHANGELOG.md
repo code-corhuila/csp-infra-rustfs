@@ -5,6 +5,8 @@ All notable changes of `csp-infra-rustfs` are recorded here. The format follows
 
 ## [Unreleased]
 
+## [3.0.0] - 2026-11-07
+
 ### Added
 
 - The single RustFS storage of the platform for the ticket PDF (ADR-058): `compose.yml` with the pinned image
