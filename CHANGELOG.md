@@ -24,3 +24,4 @@ All notable changes of `csp-infra-rustfs` are recorded here. The format follows
 - `README.md` no longer says that a lost volume is recovered by rendering the tickets again: the ticketing service does not offer that yet (TD-051).
 - `README.md` describes the storage, its variables, the bucket and the accounts, and cites ADR-058 (the repository was
   created as `csp-infra-minio` and renamed once ADR-058 chose RustFS).
+- README: how the platform composes the storage (code-corhuila/csp-infra-rustfs#5, code-corhuila/csp-infra-postgres#60): the include, the checks of `up.sh`, where the variables live and the open point of the names of the worker (`OBJECT_STORAGE_*`).
