@@ -54,6 +54,19 @@ The console (9001) is published to `127.0.0.1` only in `dev`. By hand, `dev` nee
 `COMPOSE_FILE=compose.yml:compose.dev.yml COMPOSE_PATH_SEPARATOR=:`, and the setup job reads its script from the standard input:
 `docker compose --env-file env/dev.env run --rm -T setup < rustfs/setup.sh`.
 
+## In the platform composition
+
+`csp-infra-postgres` includes the `compose.yml` of this repository (`include: ../csp-infra-rustfs/compose.yml`), so this repository has to be cloned
+next to it and checked out on `develop`. The `scripts/up.sh` of `csp-infra-postgres` checks that its env file has `RUSTFS_ROOT_USER`,
+`RUSTFS_ROOT_PASSWORD`, `TICKETING_PDF_WRITER_SECRET` and `TICKETING_PDF_READER_SECRET`, starts the storage and runs the setup of this repository
+(idempotent, from the standard input). The variables of the env examples of this repository live in the env file the platform shares; the block
+of the storage goes before the Ticketing block, because Compose only expands a variable defined earlier in the same file. In development the
+platform also uses the mail catcher; that does not concern this repository.
+
+`csp-ticketing-api` reads the storage with the reader account. `csp-worker` writes with the writer account through its own `OBJECT_STORAGE_*`
+variables, which have the same names as the reader's in the shared env file; its `deploy/compose.yml` does not pass them yet, so they have to be
+separated before the PDF job of the worker is turned on.
+
 ## Bucket and accounts
 
 | Object | Value |
